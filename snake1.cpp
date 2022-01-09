@@ -2,6 +2,9 @@
 #include <windows.h>
 #include <cstdlib>
 #include <conio.h>
+#include <fcntl.h>
+#include <io.h>
+#include <string>
 using namespace std;
 
 // khoi tao danh sach toa do cua x va y
@@ -9,7 +12,7 @@ int td_x[100] = {0}, td_y[100] = {0};
 // khoi tao do dai cua ran la 4
 int do_dai = 4;
 //------------------------------------
-void game();
+void game(int toc_do);
 void gotoxy( int column, int line );
 void vetuong();
 void taoran();
@@ -17,11 +20,71 @@ void veran();
 void dichuyen(int x, int y);
 //chương trình chính
 int main(){
-    game();
+	int chon;
+// in ra màng hình đầu tiên các option
+    gotoxy(50,10);
+	cout << "1. Mode";
+	gotoxy(50,11);
+	cout << "2. High score";
+	gotoxy(50,12);
+	cout << "3. About" << endl;
+// nhập vào số và ép đúng số mới nhận
+	do{
+		gotoxy(50,13);
+		cout << "Moi nhap yeu cau theo so: ";
+		cin >> chon;
+	}while (chon >3 or chon < 0);
+// nếu chọn Mode
+	if (chon == 1){
+		// làm sạch màng hình
+		system("cls");
+		// các level 
+		gotoxy(50,10);
+		cout << "1. Easy";
+		gotoxy(50,11);
+		cout << "2. Normal";
+		gotoxy(50,12);
+		cout << "3. Hard" << endl;
+		do{
+			gotoxy(50,13);
+			cout << "Moi nhap yeu cau theo so: ";
+			cin >> chon;
+		}while (chon >3 or chon < 0);
+		// tốc độ của các level
+		if (chon == 1){
+			game(300);
+		} else if (chon == 2){
+			game(200);
+		} else{
+			game(100);
+		}
+	}// nếu chọn coi high score
+	else if(chon == 2){
+	} 
+	//nếu chọn about
+	else{
+		// giúp cout ra UNICODE
+		_setmode(_fileno(stdout), 0x00020000);
+		_setmode(_fileno(stdout), 0x00040000);
+		system("cls");
+		// cout ra phần about
+		wcout << "\t\t\t\t" << L"GIỚI THIỆU" << endl;
+		wcout << "\t" << L"Chào mừng thầy và các bạn trải nghiệm game rắn săn mồi của team POWER RANGER"<< endl;
+		wcout << "\t" << L"Giới thiệu thành viên:"<< endl;
+		wcout << L"\t\t\t+ Ngô Quốc Huy" << endl << L"\t\t\t+ Lê Nhật Bình" << endl << L"\t\t\t+ Nguyễn Phú Kiệt" << endl;
+		wcout << L"\t\t\t+ Nguyễn Phan Phúc Hiển" << endl << L"\t\t\t+ Lê Tú" << endl;
+		wcout << L"\t\t\t\tHƯỚNG DẪN" << endl;
+		wcout << L"\tDùng phím mũi tên để di chuyển rắn ăn mồi nhiều nhất có thể nhưng không để\n\tchạm thân và tường" << endl;
+		wcout << L"\t\t\t\tCÁC CHỨC NĂNG";
+		wcout << L"\nCác chức năng sẽ bao gồm 2 chế độ: rắn sẽ tăng tốc khi ăn hoặc là không." << endl;
+		wcout << L"\tHigh score sẽ được lưu vào file txt để có thể xuất ra xem";
+	}
+	// dừng màn hình cho đến khi nhập 1 kí tự
+	_getch();
 }
 
 // hàm chạy game
-void game(){
+void game(int toc_do){
     system("cls");
     //tạo khung
     vetuong();
@@ -84,7 +147,7 @@ while (true){
 		dichuyen(x,y);
 		veran();
 		//tốc độ
-		Sleep(100);
+		Sleep(toc_do);
 	};
 }
 
