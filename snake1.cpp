@@ -18,6 +18,7 @@ void vetuong();
 void taoran();
 void veran();
 void dichuyen(int x, int y);
+bool gameover();
 //chương trình chính
 int main(){
 	int chon;
@@ -38,7 +39,7 @@ int main(){
 	if (chon == 1){
 		// làm sạch màng hình
 		system("cls");
-		// các level 
+		// các level
 		gotoxy(50,10);
 		cout << "1. Easy";
 		gotoxy(50,11);
@@ -60,7 +61,7 @@ int main(){
 		}
 	}// nếu chọn coi high score
 	else if(chon == 2){
-	} 
+	}
 	//nếu chọn about
 	else{
 		// giúp cout ra UNICODE
@@ -97,7 +98,7 @@ void game(int toc_do){
 //1: đi lên
 //2: đi qua phải
 //3: đi qua trái
-    int huong = 2; 
+    int huong = 2;
 // chạy game
 while (true){
     	if (_kbhit())
@@ -148,6 +149,13 @@ while (true){
 		veran();
 		//tốc độ
 		Sleep(toc_do);
+		if (gameover())
+        {
+        //In ra chữ game over
+        gotoxy(50,14);
+        cout<<"GAME OVER";
+        break;
+        }
 	};
 }
 
@@ -210,5 +218,15 @@ void dichuyen(int x, int y)
 	}
 	td_x[0] = x;
 	td_y[0] = y;
+}
+//Hàm xác định rắn đã cắn vào mình hay chạm tường chưa
+bool gameover()
+{
+for (int i=1;i<do_dai;i++)
+    if (td_x[i]==td_x[0]&td_y[i]==td_y[0])
+    return true;
+if (td_x[0]==10||td_x[0]==105||td_y[0]==1||td_y[0]==26)
+    return true;
+return false;
 }
 
