@@ -229,4 +229,36 @@ if (td_x[0]==10||td_x[0]==105||td_y[0]==1||td_y[0]==26)
     return true;
 return false;
 }
-
+// Tạo ra thức ăn trên bản đồ
+void tao_thuc_an(int x, int y)
+{
+    gotoxy(x,y);
+    cout << "a";
+}
+// kiểm tra rắn có ăn thức ăn chưa
+void an_thuc_an( int &x, int &y)
+{
+    if (td_x[0] == x && td_y[0] == y)
+    {
+        do_dai +=1; // nếu ăn rồi thì độ dài của rắn cộng 1
+        // random một vị trí mới cho thức ăn
+        do{
+            x = rand() % (104 - 11 + 1) + 11;
+            y = rand() % (25 - 2 + 1 ) + 2;
+        } while(kt_qua(x,y));
+        // tạo thức ăn ở vị trí mới
+        tao_thuc_an(x,y);
+    }
+}
+// kiểm tra quả random có bị trùng thân rắn không
+bool kt_qua(int x, int y)
+{
+    for (int i = 0; i < do_dai; ++i)
+    {
+        if (x == td_x[i] && y == td_y[i])
+        {
+            return true;
+        }
+    }
+    return false;
+}
