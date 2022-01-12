@@ -104,7 +104,7 @@ void game(int toc_do){
     int huong = 2;
 // tạo thức ăn ban đầu
     int x_ta = 40;
-    int Y_ta = 16;
+    int y_ta = 16;
     tao_thuc_an(x_ta,y_ta);
 // chạy game
 while (true){
