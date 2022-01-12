@@ -12,14 +12,14 @@ int td_x[100] = {0}, td_y[100] = {0};
 // khoi tao do dai cua ran la 4
 int do_dai = 4;
 //------------------------------------
-void game(int toc_do);
+void game(int toc_do, int tang_toc);
 void gotoxy( int column, int line );
 void vetuong();
 void taoran();
 void veran();
 void dichuyen(int x, int y);
 bool gameover();
-void xu_ly(int x, int y, int &score, int &toc_do);
+void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc);
 void tao_thuc_an(int x, int y);
 void an_thuc_an(int &x, int &y);
 bool kt_qua(int x, int y);
@@ -43,28 +43,63 @@ int main(){
 	if (chon == 1){
 		// làm sạch màng hình
 		system("cls");
-		// các level
 		gotoxy(50,10);
-		cout << "1. Easy";
+		cout << "1. Tang toc";
 		gotoxy(50,11);
-		cout << "2. Normal";
-		gotoxy(50,12);
-		cout << "3. Hard" << endl;
+		cout << "2. Binh thuong";
+		// lựa chọn giữa 2 mode
 		do{
 			gotoxy(50,13);
 			cout << "Moi nhap yeu cau theo so: ";
 			cin >> chon;
-		}while (chon >3 or chon < 0);
-		// tốc độ của các level
+		}while (chon >2 or chon < 0);
 		if (chon == 1){
-			game(300);
-		} else if (chon == 2){
-			game(200);
-		} else{
-			game(100);
+			// làm sạch màng hình
+			system("cls");
+			// các level
+			gotoxy(50,10);
+			cout << "1. Easy";
+			gotoxy(50,11);
+			cout << "2. Normal";
+			gotoxy(50,12);
+			cout << "3. Hard" << endl;
+			do{
+				gotoxy(50,13);
+				cout << "Moi nhap yeu cau theo so: ";
+				cin >> chon;
+			}while (chon >3 or chon < 0);
+			// tốc độ của các level
+			if (chon == 1){
+				game(300,4);
+			} else if (chon == 2){
+				game(200,4);
+			} else{
+				game(100,4);
+			}
+		}else if (chon == 2){
+			system("cls");
+			gotoxy(50,10);
+			cout << "1. Easy";
+			gotoxy(50,11);
+			cout << "2. Normal";
+			gotoxy(50,12);
+			cout << "3. Hard" << endl;
+			do{
+				gotoxy(50,13);
+				cout << "Moi nhap yeu cau theo so: ";
+				cin >> chon;
+			}while (chon >3 or chon < 0);
+			if (chon == 1){
+				game(300,0);
+			} else if (chon == 2){
+				game(200,0);
+			} else{
+				game(100,0);
+			}
 		}
 	}// nếu chọn coi high score
 	else if(chon == 2){
+		//high score
 	}
 	//nếu chọn about
 	else{
@@ -89,7 +124,7 @@ int main(){
 }
 
 // hàm chạy game
-void game(int toc_do){
+void game(int toc_do, int tang_toc){
     int score = 0;
     system("cls");
     //tạo khung
@@ -109,8 +144,8 @@ void game(int toc_do){
     int y_ta = 16;
     tao_thuc_an(x_ta,y_ta);
 // chạy game
-while (true){
-    	if (_kbhit())
+	while (true){
+		if (_kbhit())
 		{
 			char c = _getch();
 			if (c == -32)
@@ -158,17 +193,17 @@ while (true){
 		veran();
 		//tốc độ
 		Sleep(toc_do);
-	  xu_ly(x_ta,y_ta,score,toc_do);
+		xu_ly(x_ta,y_ta,score,toc_do,tang_toc);
 // kiểm tra rắn có ăn thức ăn chưa
-    an_thuc_an(x_ta,y_ta);
+	an_thuc_an(x_ta,y_ta);
 		if (gameover())
-        {
-        //In ra chữ game over
-        gotoxy(50,14);
-        cout<<"GAME OVER";
-        break;
-        }
-	};
+		{
+		//In ra chữ game over
+		gotoxy(50,14);
+		cout<<"GAME OVER";
+		break;
+		}
+	}
 }
 
 
@@ -275,10 +310,11 @@ bool kt_qua(int x, int y)
     return false;
 }
 // xử lý điểm, tốc độ rắn
-void xu_ly(int x, int y, int &score, int &toc_do){
+void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc){
     if (td_x[0] == x and td_y[0] == y){
         gotoxy(2,28);
-	score += 5;
-	cout << "diem hien tai la: " << score;
-    }
+		score += 5;
+		cout << "diem hien tai la: " << score;
+		toc_do -= tang_toc;
+	}
 }    
