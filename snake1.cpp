@@ -19,6 +19,9 @@ void taoran();
 void veran();
 void dichuyen(int x, int y);
 bool gameover();
+void tao_thuc_an(int x, int y);
+void an_thuc_an(int &x, int &y);
+bool kt_qua(int x, int y);
 //chương trình chính
 int main(){
 	int chon;
@@ -99,6 +102,10 @@ void game(int toc_do){
 //2: đi qua phải
 //3: đi qua trái
     int huong = 2;
+// tạo thức ăn ban đầu
+    int x_ta = 40;
+    int y_ta = 16;
+    tao_thuc_an(x_ta,y_ta);
 // chạy game
 while (true){
     	if (_kbhit())
@@ -149,6 +156,8 @@ while (true){
 		veran();
 		//tốc độ
 		Sleep(toc_do);
+// kiểm tra rắn có ăn thức ăn chưa
+        an_thuc_an(x_ta,y_ta);
 		if (gameover())
         {
         //In ra chữ game over
