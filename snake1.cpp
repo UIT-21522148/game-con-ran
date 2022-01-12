@@ -19,6 +19,7 @@ void taoran();
 void veran();
 void dichuyen(int x, int y);
 bool gameover();
+void xu_ly(int x, int y, int &score, int &toc_do);
 void tao_thuc_an(int x, int y);
 void an_thuc_an(int &x, int &y);
 bool kt_qua(int x, int y);
@@ -156,8 +157,9 @@ while (true){
 		veran();
 		//tốc độ
 		Sleep(toc_do);
+	  xu_ly(x_ta,y_ta,score,toc_do);
 // kiểm tra rắn có ăn thức ăn chưa
-        an_thuc_an(x_ta,y_ta);
+    an_thuc_an(x_ta,y_ta);
 		if (gameover())
         {
         //In ra chữ game over
@@ -271,3 +273,11 @@ bool kt_qua(int x, int y)
     }
     return false;
 }
+/ xử lý điểm, tốc độ rắn
+void xu_ly(int x, int y, int &score, int &toc_do){
+    if (td_x[0] == x and td_y[0] == y){
+        gotoxy(2,28);
+	score += 5;
+	cout << "diem hien tai la: " << score;
+    }
+}    
