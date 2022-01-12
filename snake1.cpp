@@ -90,6 +90,7 @@ int main(){
 
 // hàm chạy game
 void game(int toc_do){
+    int score = 0;
     system("cls");
     //tạo khung
     vetuong();
@@ -273,7 +274,7 @@ bool kt_qua(int x, int y)
     }
     return false;
 }
-/ xử lý điểm, tốc độ rắn
+// xử lý điểm, tốc độ rắn
 void xu_ly(int x, int y, int &score, int &toc_do){
     if (td_x[0] == x and td_y[0] == y){
         gotoxy(2,28);
