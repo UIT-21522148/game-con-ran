@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <time.h>
-#include <math.h>
+#include <winbgim.h>
 using namespace std;
 
 // khoi tao danh sach toa do cua x va y
@@ -26,18 +26,18 @@ void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc);
 void tao_thuc_an(int x, int y);
 void an_thuc_an(int &x, int &y);
 bool kt_qua(int x, int y);
-void kiemtradiem(int score);
-void xu_ly_file();
-void nhap_file();
-int Chuyen_Doi(char s[]);
+void showHighScore();
+void checkHighScore(int score);
+void getHighScore();
+void ktratemdiem();
+bool ktrateprong();
+void showText(int x, int y, char *str){
+	outtextxy(x,y,str);
+	delay(200);
+}
 
-struct HighScore{
-    int Score;
-};
-HighScore highscore[5];
 //chương trình chính
 int main(){
-    FILE *fp=NULL;
 	int chon;
 // in ra màng hình đầu tiên các option
     gotoxy(50,10);
@@ -113,17 +113,6 @@ int main(){
 	}// nếu chọn coi high score
 	else if(chon == 2){
 		//high score
-		int z=6;
-		char arr[100];
-		system("cls");
-		gotoxy(50,5);
-		cout<<"Top"<<endl;
-		fp=fopen("High score.txt","r");
-		while (fgets(arr,100,fp)!=NULL){
-            gotoxy(45,z);
-            cout<<"No "<<z-5<<"."<<arr<<endl;
-            z++;
-		}
 	}
 	//nếu chọn about
 	else{
@@ -145,7 +134,12 @@ int main(){
 	}
 	// dừng màn hình cho đến khi nhập 1 kí tự
 	_getch();
-
+	int score;
+	showHighScore();
+	getHighScore();
+	checkHighScore(score);
+	ktratemdiem();
+	ktrateprong();
 }
 
 // hàm chạy game
@@ -343,46 +337,141 @@ void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc){
 		toc_do -= tang_toc;
 	}
 }
-void xu_ly_file(){
-FILE *f;
-char arr[30];
-int i=0;
-f=fopen("High score.txt","r+");
-while(i<5){
-    fscanf(f,"%s",arr);
-    highscore[i].Score=Chuyen_Doi(arr);
-    i++;
-
-}
+struct HighScore{
+	int score;
+	char name[30];
 };
-void kiemtradiem(int score){
-for (int i=0;i<5;i++){
-    if(score>highscore[i].Score){
-        for(int j=4;j<i;j--){
-            highscore[j].Score=highscore[j-1].Score;
+  HighScore highscore[5];
+char* score_str= new char[20];
 
-        }
-        highscore[i].Score=score;
-        break;
-    }
-}nhap_file();
+
+
+void ktratepdiem(){
+ if (ktrateprong()){
+ 	for ( int i=0;i<5;i++){
+
+ 	strcpy(highscore[i].name,"PLAYER");
+ 	highscore[i].score=0;
+
+ }getHighScore();
 }
-void nhap_file(){
-FILE *f;
-f=fopen("High score.txt","w");
-for(int i=0;i<5;i++){
-    fprintf(f,"%d",highscore[i].Score);
-    fputs("\n",f);
+
+else { char arr[20];
+ int count=0;
+ FILE *f;
+ f=fopen("highscore.txt","r");
+ for (int i=0;i<5;){
+ 	while (!feof(f)){
+ 		count++;
+ 		fscanf(f,"%s",arr);
+ 		if ( count%2==1){
+ 			strcpy(highscore[i].name,arr);
+
+		 }else {
+		 	highscore[i].score=atoi(arr);
+		 	i++;
+
+		 }
+	 }
+ }
+}
+}
+bool ktrateprong(){
+	FILE *fp;
+	long size;
+	fp=fopen("highscore.txt","r");
+	if (fp){
+		fseek(fp,0,SEEK_END);
+		size=ftell(fp);
+		fclose(fp);
+
+	}return ( size==0);
 
 }
-fclose(f);
+void showHighScore(){
+	FILE *f;
+	f=fopen("highscore.txt","r");
+	char ch[20];
+	settextstyle(1,0,5);
+	outtextxy(150,50,"HIGH SCORE");
+	settextstyle(1,0,4);
+	int y=150,count=0;
+	while(!feof(f)){
+		if(count==10) break;
+		count++;
+		fscanf(f,"%s",ch);
+		if (count%2==1){
+			outtextxy(180,y,ch);
+			y+=50;
+
+		}else{
+			outtextxy(500,y-50,ch);
+
+		}
+	} fclose(f);
 }
-int Chuyen_Doi(char s[]){
-float sum=0;
-int mu=0;
-for(int i=strlen(s)-1;i>=0;i--){
-sum=sum+((s[i]-48)*pow(10,mu));
-mu++;
+void getHighScore(){
+	FILE *f;
+	f=fopen("highscore.txt","w");
+	for(int i =0;i<5;i++){
+		fputs(highscore[i].name,f);
+		fputs(" ",f);
+		fprintf(f,"%d",highscore[i].score);
+		fputs("\n",f);
+
+	} fclose(f);
+
 }
-return sum;
+void checkHighScore(int _score){
+	char _name[20]={""};
+	for (int i=0;i<5;i++){
+		if(_score>highscore[i].score){
+			settextstyle(1,0,3);
+			for (int j=0;j<50;j++){
+				if (j%2==0){
+					if (i==0)
+					outtextxy(460,100,"BEST SCORE");
+					else
+					outtextxy(460,100,"HIGH SCORE");
+					delay(100);
+
+				}else{
+					if(i==0)
+					outtextxy(460,100,"BEST SCORE");
+					else
+					outtextxy(460,100,"HIGH SCORE");
+					delay(100);
+
+				}
+			}
+			settextstyle(1,0,2);
+			outtextxy(430,150,"PLAYER:");
+			delay(100);
+			char ch1;
+			int x=0;
+			char str[2];
+			str[1]=0;
+			while( ch1!=13 && x<10){
+				do{
+					ch1=getch();
+				}while(ch1<65 && ch1>90 || ch1<97 && ch1>132);
+				x++;
+				str[0]=ch1;
+				strcat(_name,str);
+				outtextxy(540,150,_name);
+
+			}
+			for (int j=4;j>i;j--){
+				strcpy(highscore[j].name,highscore[j-1].name);
+				highscore[j].score=highscore[j-1].score;
+
+			}
+			strcpy(highscore[i].name,_name);
+			highscore[i].score=_score;
+			break;
+		}
+	} getHighScore();
+
 }
+
+
