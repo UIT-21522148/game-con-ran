@@ -134,6 +134,12 @@ int main(){
 	}
 	// dừng màn hình cho đến khi nhập 1 kí tự
 	_getch();
+	int score;
+	showHighScore();
+	getHighScore();
+	checkHighScore(score);
+	ktratemdiem();
+	ktrateprong();
 }
 
 // hàm chạy game
@@ -330,20 +336,23 @@ void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc){
 		cout << "diem hien tai la: " << score;
 		toc_do -= tang_toc;
 	}
-}  
+}
 struct HighScore{
 	int score;
 	char name[30];
 };
   HighScore highscore[5];
 char* score_str= new char[20];
+
+
+
 void ktratepdiem(){
  if (ktrateprong()){
  	for ( int i=0;i<5;i++){
-	 
+
  	strcpy(highscore[i].name,"PLAYER");
  	highscore[i].score=0;
- 	
+
  }getHighScore();
 }
 
@@ -357,11 +366,11 @@ else { char arr[20];
  		fscanf(f,"%s",arr);
  		if ( count%2==1){
  			strcpy(highscore[i].name,arr);
- 			
+
 		 }else {
 		 	highscore[i].score=atoi(arr);
 		 	i++;
-		 	
+
 		 }
 	 }
  }
@@ -375,9 +384,9 @@ bool ktrateprong(){
 		fseek(fp,0,SEEK_END);
 		size=ftell(fp);
 		fclose(fp);
-		
+
 	}return ( size==0);
-	
+
 }
 void showHighScore(){
 	FILE *f;
@@ -394,10 +403,10 @@ void showHighScore(){
 		if (count%2==1){
 			outtextxy(180,y,ch);
 			y+=50;
-			
+
 		}else{
 			outtextxy(500,y-50,ch);
-			
+
 		}
 	} fclose(f);
 }
@@ -409,9 +418,9 @@ void getHighScore(){
 		fputs(" ",f);
 		fprintf(f,"%d",highscore[i].score);
 		fputs("\n",f);
-		
+
 	} fclose(f);
-	
+
 }
 void checkHighScore(int _score){
 	char _name[20]={""};
@@ -422,17 +431,17 @@ void checkHighScore(int _score){
 				if (j%2==0){
 					if (i==0)
 					outtextxy(460,100,"BEST SCORE");
-					else 
+					else
 					outtextxy(460,100,"HIGH SCORE");
 					delay(100);
-					
+
 				}else{
 					if(i==0)
 					outtextxy(460,100,"BEST SCORE");
 					else
 					outtextxy(460,100,"HIGH SCORE");
 					delay(100);
-					
+
 				}
 			}
 			settextstyle(1,0,2);
@@ -450,18 +459,19 @@ void checkHighScore(int _score){
 				str[0]=ch1;
 				strcat(_name,str);
 				outtextxy(540,150,_name);
-				
+
 			}
 			for (int j=4;j>i;j--){
 				strcpy(highscore[j].name,highscore[j-1].name);
 				highscore[j].score=highscore[j-1].score;
-				
+
 			}
 			strcpy(highscore[i].name,_name);
 			highscore[i].score=_score;
 			break;
 		}
 	} getHighScore();
-	
-} 
+
+}
+
 
