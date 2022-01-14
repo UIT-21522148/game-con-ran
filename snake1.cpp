@@ -28,6 +28,8 @@ void an_thuc_an(int &x, int &y);
 bool kt_qua(int x, int y);
 int Chuyen_Doi(char s[]);
 void nhap_file();
+void xu_ly_file();
+void kiemtradiem(int score);
 
 
 
@@ -214,7 +216,8 @@ void game(int toc_do, int tang_toc){
 // kiểm tra rắn có ăn thức ăn chưa
 	an_thuc_an(x_ta,y_ta);
 		if (gameover())
-		{
+		{ xu_ly_file();
+		 kiemtradiem(score);
 		//In ra chữ game over
 		gotoxy(50,14);
 		cout<<"GAME OVER";
@@ -343,10 +346,10 @@ FILE *f;
 char arr[30];
 int i=0;
 f=fopen("High score.txt","r+");
-while(i<5)
+while(i<5){
     fscanf(f,"%s",arr);
     highscore[i].Score=Chuyen_Doi(arr);
-    i++;
+    i++;}
 
 }
 
