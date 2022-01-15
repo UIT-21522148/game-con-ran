@@ -6,8 +6,9 @@
 #include <io.h>
 #include <string.h>
 #include <stdio.h>
-#include <time.h>
 #include <math.h>
+#include <string>
+
 using namespace std;
 
 // khoi tao danh sach toa do cua x va y
@@ -30,7 +31,6 @@ int Chuyen_Doi(char s[]);
 void nhap_file();
 void xu_ly_file();
 void kiemtradiem(int score);
-
 
 
 //chương trình chính
@@ -139,7 +139,6 @@ int main(){
 	}
 	// dừng màn hình cho đến khi nhập 1 kí tự
 	_getch();
-
 }
 
 // hàm chạy game
@@ -228,16 +227,15 @@ void game(int toc_do, int tang_toc){
 
 
 // hàm chỉ đến tọa độ x,y
-void gotoxy( int column, int line )
-  {
-  COORD coord;
-  coord.X = column;
-  coord.Y = line;
-  SetConsoleCursorPosition(
-    GetStdHandle( STD_OUTPUT_HANDLE ),
-    coord
-    );
-  }
+void gotoxy( int column, int line ){
+    COORD coord;
+    coord.X = column;
+    coord.Y = line;
+    SetConsoleCursorPosition(
+      GetStdHandle( STD_OUTPUT_HANDLE ),
+      coord
+      );
+}
 // làm vẽ tường
 void vetuong()
 {
@@ -277,24 +275,24 @@ void veran(){
 //hàm giúp rắn di chuyển
 void dichuyen(int x, int y)
 {
-	//them x,y vao dau toa do x va y
-	for (int i = do_dai -1;i > 0;i--)
-	{
-		td_x[i] = td_x[i-1];
-		td_y[i] = td_y[i-1];
-	}
-	td_x[0] = x;
-	td_y[0] = y;
+    //them x,y vao dau toa do x va y
+    for (int i = do_dai -1;i > 0;i--)
+    {
+      td_x[i] = td_x[i-1];
+      td_y[i] = td_y[i-1];
+    }
+    td_x[0] = x;
+    td_y[0] = y;
 }
 //Hàm xác định rắn đã cắn vào mình hay chạm tường chưa
 bool gameover()
 {
-for (int i=1;i<do_dai;i++)
-    if (td_x[i]==td_x[0]&td_y[i]==td_y[0])
-    return true;
-if (td_x[0]==10||td_x[0]==105||td_y[0]==1||td_y[0]==26)
-    return true;
-return false;
+    for (int i=1;i<do_dai;i++)
+        if (td_x[i]==td_x[0]&td_y[i]==td_y[0])
+        return true;
+    if (td_x[0]==10||td_x[0]==105||td_y[0]==1||td_y[0]==26)
+        return true;
+    return false;
 }
 // Tạo ra thức ăn trên bản đồ
 void tao_thuc_an(int x, int y)
@@ -333,52 +331,53 @@ bool kt_qua(int x, int y)
 void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc){
     if (td_x[0] == x and td_y[0] == y){
         gotoxy(2,28);
-		score += 5;
-		cout << "diem hien tai la: " << score;
-		toc_do -= tang_toc;
+        score += 5;
+        cout << "diem hien tai la: " << score;
+        toc_do -= tang_toc;
 	}
 }
 struct HighScore{ int Score;};
 HighScore highscore[5];
 
 void xu_ly_file(){
-FILE *f;
-char arr[30];
-int i=0;
-f=fopen("High score.txt","r+");
-while(i<5){
-    fscanf(f,"%s",arr);
-    highscore[i].Score=Chuyen_Doi(arr);
-    i++;}
+    FILE *f;
+    char arr[30];
+    int i=0;
+    f=fopen("High score.txt","r+");
+    while(i<5){
+        fscanf(f,"%s",arr);
+        highscore[i].Score=Chuyen_Doi(arr);
+        i++;}
 
 }
 
 void kiemtradiem(int score){
     for(int i=0;i<5;i++){
-        if(score>highscore[i].Score)
+        if(score>highscore[i].Score){
             for(int j=4;j>i;j--){
                 highscore[i].Score=highscore[j-1].Score;
             }
-        highscore[i].Score=score;
-        break;
+            highscore[i].Score=score;
+            break;
+        }
     }
- nhap_file();
+    nhap_file();
 }
 void nhap_file(){
-FILE *f;
-f=fopen("High score.txt","w");
-for (int i=0;i<5;i++){
-    fprintf(f,"%d",highscore[i].Score);
-    fputs("\n",f);
-
-}fclose(f);
+    FILE *f;
+    f=fopen("High score.txt","w");
+    for (int i=0;i<5;i++){
+        fprintf(f,"%d",highscore[i].Score);
+        fputs("\n",f);
+    }fclose(f);
 }
 int Chuyen_Doi(char s[]){
-float sum=0;
-int mu=0;
-for(int i=strlen(s)-1;i>=0;i--){
-    sum=sum+(s[i-48]*pow(10,mu));
-    mu++;
+    float sum=0;
+    int mu=0;
+    for(int i=strlen(s)-1;i>=0;i--){
+        sum=sum+(s[i-48]*pow(10,mu));
+        mu++;
+    }
+    return sum;
 }
-return sum;
-}
+
