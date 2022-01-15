@@ -23,7 +23,7 @@ void taoran();
 void veran();
 void dichuyen(int x, int y);
 bool gameover();
-void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc);
+void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc, int chenh_lech);
 void tao_thuc_an(int x, int y);
 void an_thuc_an(int &x, int &y);
 bool kt_qua(int x, int y);
@@ -83,7 +83,7 @@ int main(){
 			if (chon == 1){
 				game(300,4);
 			} else if (chon == 2){
-				game(200,4);
+				game(150,4);
 			} else{
 				game(100,4);
 			}
@@ -144,6 +144,7 @@ int main(){
 // hàm chạy game
 void game(int toc_do, int tang_toc){
     int score = 0;
+	int chenh_lech = 300/toc_do;
     system("cls");
     //tạo khung
     vetuong();
@@ -211,9 +212,9 @@ void game(int toc_do, int tang_toc){
 		veran();
 		//tốc độ
 		Sleep(toc_do);
-		xu_ly(x_ta,y_ta,score,toc_do,tang_toc);
+		xu_ly(x_ta,y_ta,score,toc_do,tang_toc,chenh_lech);
 // kiểm tra rắn có ăn thức ăn chưa
-	an_thuc_an(x_ta,y_ta);
+		an_thuc_an(x_ta,y_ta);
 		if (gameover())
 		{ xu_ly_file();
 		 kiemtradiem(score);
@@ -328,10 +329,10 @@ bool kt_qua(int x, int y)
     return false;
 }
 // xử lý điểm, tốc độ rắn
-void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc){
+void xu_ly(int x, int y, int &score, int &toc_do, int tang_toc, int chenh_lech){
     if (td_x[0] == x and td_y[0] == y){
         gotoxy(2,28);
-        score += 5;
+        score += 4 + chenh_lech + tang_toc/2;
         cout << "diem hien tai la: " << score;
         toc_do -= tang_toc;
 	}
