@@ -385,7 +385,7 @@ int Chuyen_Doi(char s[]){
     float sum=0;
     int mu=0;
     for(int i=strlen(s)-1;i>=0;i--){
-        sum=sum+(s[i-48]*pow(10,mu));
+        sum=sum+((s[i]-48)*pow(10,mu));
         mu++;
     }
     return sum;
