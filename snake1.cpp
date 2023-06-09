@@ -134,16 +134,16 @@ int main(){
 		wcout << L"\t\t\t\tHƯỚNG DẪN" << endl;
 		wcout << L"\tDùng phím mũi tên để di chuyển rắn ăn mồi nhiều nhất có thể nhưng không để\n\tchạm thân và tường" << endl;
 		wcout << L"\t\t\t\tCÁC CHỨC NĂNG";
-		wcout << L"\n\tGame sẽ gồm 2 chế độ chơi: Chế độ \"Tang toc\" và chế độ \"Binh thuong\". ";
-		wcout << L"Với mỗi chế độ thì ta sẽ có 3 cấp độ để thử thách người chơi là easy, normal và hard. ";
-		wcout << L"Với chế độ \"Tang toc\" thì sau khi rắn ăn thức ăn tốc độ chạy của nó sẽ tăng dần. ";
-		wcout << L"Với chế độ \"Binh thuong\" thì tốc độ của rắn sẽ giữ nguyên sau khi ăn thức ăn. "<< endl;
+		wcout << L"\n\tGame sẽ gồm 2 chế độ chơi : chế độ \"Tang toc\" và chế độ \"Binh thuong\". ";
+		wcout << L"Với mỗi chế độ thì ta sẽ có 3 cấp độ để thử thách người chơi là easy, normal và hard. ";
+		wcout << L"Với chế độ \"Tang toc\" thì sau khi rắn ăn thức ăn thì tốc độ chạy của nó sẽ tăng dần. ";
+		wcout << L"Với chế độ \"Binh thuong\" thì tốc độ của rắn sẽ giữ nguyên sau khi ăn thức ăn. "<< endl;
 		wcout << L"\t\t\t\tCÁCH TÍNH ĐIỂM"<< endl;
-		wcout << L"\t\tChế độ \"Binh thuong\" :  + easy : 5 điểm" << endl;
-		wcout << L"\t\t\t\t + normal : 6 điểm" << endl;
+		wcout << L"\t\tChế độ \"Binh thuong\" :  + easy : 5 điểm" << endl;
+		wcout << L"\t\t\t\t + normal : 6 điểm" << endl;
 		wcout << L"\t\t\t\t + hard: 7 điểm" << endl;
-		wcout << L"\t\tChế độ \"Tang toc\" :  + easy : 7 điểm" << endl;
-		wcout << L"\t\t\t\t + normal : 8 điểm" << endl;
+		wcout << L"\t\tChế độ \"Tang toc\" :  + easy : 7 điểm" << endl;
+		wcout << L"\t\t\t\t + normal : 8 điểm" << endl;
 		wcout << L"\t\t\t\t + hard: 9 điểm";
 	}
 	// dừng màn hình cho đến khi nhập 1 kí tự
